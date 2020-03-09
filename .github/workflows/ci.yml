@@ -1,0 +1,26 @@
+name: CI
+
+on: [push]
+
+jobs:
+  test:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+        ruby: [ 2.5, 2.6, 2.7 ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+
+    - run: gem install bundler -v 2.0.2
+
+    - uses: actions/checkout@v2
+
+    - run: bundle install --jobs 4 --retry 3
+
+    - run: bundle exec rspec
