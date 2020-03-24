@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    the_pb (0.0.1)
+    the_pb (0.0.2)
       google-protobuf (~> 3.0)
 
 GEM
@@ -40,4 +40,4 @@ DEPENDENCIES
   the_pb!
 
 BUNDLED WITH
-   2.0.2
+   2.1.4
