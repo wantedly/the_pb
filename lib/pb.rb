@@ -25,6 +25,7 @@ module Pb
     # @return [Google::Protobuf::Timestamp, nil]
     def to_timestamp(t)
       return nil if t.nil?
+      return t if t.is_a?(Google::Protobuf::Timestamp)
       case t
       when DateTime, Date
         t = t.to_time
@@ -40,6 +41,7 @@ module Pb
     # @return [Google::Protobuf::StringValue, nil]
     def to_strval(str)
       return nil if str.nil?
+      return str if str.is_a?(Google::Protobuf::StringValue)
       Google::Protobuf::StringValue.new(value: str)
     end
 
@@ -47,6 +49,7 @@ module Pb
     # @return [Google::Protobuf::Int32Value, nil]
     def to_int32val(num)
       return nil if num.nil?
+      return num if num.is_a?(Google::Protobuf::Int32Value)
       Google::Protobuf::Int32Value.new(value: num)
     end
 
@@ -54,6 +57,7 @@ module Pb
     # @return [Google::Protobuf::Int64Value, nil]
     def to_int64val(num)
       return nil if num.nil?
+      return num if num.is_a?(Google::Protobuf::Int64Value)
       case num
       when String
         n = num.to_i
@@ -67,6 +71,7 @@ module Pb
     # @return [Google::Protobuf::UInt32Value, nil]
     def to_uint32val(num)
       return nil if num.nil?
+      return num if num.is_a?(Google::Protobuf::UInt32Value)
       Google::Protobuf::UInt32Value.new(value: num)
     end
 
@@ -74,6 +79,7 @@ module Pb
     # @return [Google::Protobuf::UInt64Value, nil]
     def to_uint64val(num)
       return nil if num.nil?
+      return num if num.is_a?(Google::Protobuf::UInt64Value)
       case num
       when String
         n = num.to_i
@@ -87,6 +93,7 @@ module Pb
     # @return [Google::Protobuf::FloatValue, nil]
     def to_floatval(num)
       return nil if num.nil?
+      return num if num.is_a?(Google::Protobuf::FloatValue)
       Google::Protobuf::FloatValue.new(value: num)
     end
 
@@ -94,6 +101,7 @@ module Pb
     # @return [Google::Protobuf::DoubleValue, nil]
     def to_doubleval(num)
       return nil if num.nil?
+      return num if num.is_a?(Google::Protobuf::DoubleValue)
       Google::Protobuf::DoubleValue.new(value: num)
     end
 
@@ -101,6 +109,7 @@ module Pb
     # @return [Google::Protobuf::BoolValue, nil]
     def to_boolval(b)
       return nil if b.nil?
+      return b if b.is_a?(Google::Protobuf::BoolValue)
       Google::Protobuf::BoolValue.new(value: b)
     end
 
@@ -108,6 +117,7 @@ module Pb
     # @return [Google::Protobuf::BytesValue, nil]
     def to_bytesval(bytes)
       return nil if bytes.nil?
+      return bytes if bytes.is_a?(Google::Protobuf::BytesValue)
       Google::Protobuf::BytesValue.new(value: bytes)
     end
 

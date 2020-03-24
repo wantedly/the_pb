@@ -130,6 +130,98 @@ RSpec.describe Pb do
       end
     end
 
+    context "when value is an instance of a builtin type" do
+      context "when klass is Timestamp" do
+        let(:klass) { Google::Protobuf::Timestamp }
+        let(:value) { klass.new(seconds: 1) }
+
+        it "returns protobuf object" do
+          expect(Pb.to_proto(klass, value)).to eq value
+        end
+      end
+
+      context "when klass is StringValue" do
+        let(:klass) { Google::Protobuf::StringValue }
+        let(:value) { klass.new(value: "string") }
+
+        it "returns protobuf object" do
+          expect(Pb.to_proto(klass, value)).to eq value
+        end
+      end
+
+      context "when klass is Int32Value" do
+        let(:klass) { Google::Protobuf::Int32Value }
+        let(:value) { klass.new(value: 1) }
+
+        it "returns protobuf object" do
+          expect(Pb.to_proto(klass, value)).to eq value
+        end
+      end
+
+      context "when klass is Int64Value" do
+        let(:klass) { Google::Protobuf::Int64Value }
+        let(:value) { klass.new(value: 1) }
+
+        it "returns protobuf object" do
+          expect(Pb.to_proto(klass, value)).to eq value
+        end
+      end
+
+      context "when klass is UInt32Value" do
+        let(:klass) { Google::Protobuf::UInt32Value }
+        let(:value) { klass.new(value: 1) }
+
+        it "returns protobuf object" do
+          expect(Pb.to_proto(klass, value)).to eq value
+        end
+      end
+
+      context "when klass is UInt64Value" do
+        let(:klass) { Google::Protobuf::UInt64Value }
+        let(:value) { klass.new(value: 1) }
+
+        it "returns protobuf object" do
+          expect(Pb.to_proto(klass, value)).to eq value
+        end
+      end
+
+      context "when klass is FloatValue" do
+        let(:klass) { Google::Protobuf::FloatValue }
+        let(:value) { klass.new(value: 1.0) }
+
+        it "returns protobuf object" do
+          expect(Pb.to_proto(klass, value)).to eq value
+        end
+      end
+
+      context "when klass is DoubleValue" do
+        let(:klass) { Google::Protobuf::DoubleValue }
+        let(:value) { klass.new(value: 1.0) }
+
+        it "returns protobuf object" do
+          expect(Pb.to_proto(klass, value)).to eq value
+        end
+      end
+
+      context "when klass is BoolValue" do
+        let(:klass) { Google::Protobuf::BoolValue }
+        let(:value) { klass.new(value: true) }
+
+        it "returns protobuf object" do
+          expect(Pb.to_proto(klass, value)).to eq value
+        end
+      end
+
+      context "when klass is BytesValue" do
+        let(:klass) { Google::Protobuf::BytesValue }
+        let(:value) { klass.new(value: "\x0\x1".encode(Encoding::ASCII_8BIT)) }
+
+        it "returns protobuf object" do
+          expect(Pb.to_proto(klass, value)).to eq value
+        end
+      end
+    end
+
     context "when value is not builtin type" do
       let(:proto_class_a) {
         klass_b = proto_class_b  # Assign to variable
