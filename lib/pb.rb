@@ -21,7 +21,7 @@ module Pb
   ].freeze
 
   class << self
-    # @param [Time, DateTime, Date, String, nil] t
+    # @param [Time, DateTime, Date, String, Google::Protobuf::Timestamp, nil] t
     # @return [Google::Protobuf::Timestamp, nil]
     def to_timestamp(t)
       return nil if t.nil?
@@ -37,7 +37,7 @@ module Pb
       Google::Protobuf::Timestamp.new(seconds: t.to_i, nanos: t.nsec)
     end
 
-    # @param [String, nil]
+    # @param [String, Google::Protobuf::StringValue, nil]
     # @return [Google::Protobuf::StringValue, nil]
     def to_strval(str)
       return nil if str.nil?
@@ -45,7 +45,7 @@ module Pb
       Google::Protobuf::StringValue.new(value: str)
     end
 
-    # @param [Integer, nil] num
+    # @param [Integer, Google::Protobuf::Int32Value, nil] num
     # @return [Google::Protobuf::Int32Value, nil]
     def to_int32val(num)
       return nil if num.nil?
@@ -53,7 +53,7 @@ module Pb
       Google::Protobuf::Int32Value.new(value: num)
     end
 
-    # @param [String, Integer, nil] num
+    # @param [String, Integer, Google::Protobuf::Int64Value, nil] num
     # @return [Google::Protobuf::Int64Value, nil]
     def to_int64val(num)
       return nil if num.nil?
@@ -67,7 +67,7 @@ module Pb
       Google::Protobuf::Int64Value.new(value: n)
     end
 
-    # @param [Integer, nil] num
+    # @param [Integer, Google::Protobuf::UInt32Value, nil] num
     # @return [Google::Protobuf::UInt32Value, nil]
     def to_uint32val(num)
       return nil if num.nil?
@@ -75,7 +75,7 @@ module Pb
       Google::Protobuf::UInt32Value.new(value: num)
     end
 
-    # @param [String, Integer, nil] num
+    # @param [String, Integer, Google::Protobuf::UInt64Value, nil] num
     # @return [Google::Protobuf::UInt64Value, nil]
     def to_uint64val(num)
       return nil if num.nil?
@@ -89,7 +89,7 @@ module Pb
       Google::Protobuf::UInt64Value.new(value: n)
     end
 
-    # @param [Float, nil] num
+    # @param [Float, Google::Protobuf::FloatValue, nil] num
     # @return [Google::Protobuf::FloatValue, nil]
     def to_floatval(num)
       return nil if num.nil?
@@ -97,7 +97,7 @@ module Pb
       Google::Protobuf::FloatValue.new(value: num)
     end
 
-    # @param [Float, nil] num
+    # @param [Float, Google::Protobuf::DoubleValue, nil] num
     # @return [Google::Protobuf::DoubleValue, nil]
     def to_doubleval(num)
       return nil if num.nil?
@@ -105,7 +105,7 @@ module Pb
       Google::Protobuf::DoubleValue.new(value: num)
     end
 
-    # @param [bool, nil] b
+    # @param [bool, Google::Protobuf::BoolValue, nil] b
     # @return [Google::Protobuf::BoolValue, nil]
     def to_boolval(b)
       return nil if b.nil?
@@ -113,7 +113,7 @@ module Pb
       Google::Protobuf::BoolValue.new(value: b)
     end
 
-    # @param [String, nil] bytes
+    # @param [String, Google::Protobuf::BytesValue, nil] bytes
     # @return [Google::Protobuf::BytesValue, nil]
     def to_bytesval(bytes)
       return nil if bytes.nil?
