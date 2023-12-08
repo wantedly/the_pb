@@ -300,6 +300,67 @@ RSpec.describe Pb do
           )
         )
       end
+
+    end
+    context "when message entry is a map" do
+      let(:proto_class_a) {
+        klass_b = proto_class_b  # Assign to variable
+
+        # Use random name to avoid conflict
+        proto_class_name = "proto_class_a_#{Array.new(20) { rand(('a'.ord)..('z'.ord)).chr }.join}"
+
+        Google::Protobuf::DescriptorPool.generated_pool.build do
+          add_message proto_class_name do
+            map :map_with_primitive_value, :string, :string, 1
+            map :map_with_message_value, :string, :message, 2, klass_b.descriptor.name
+            map :map_with_builtin_value, :string, :message, 3, "google.protobuf.Timestamp"
+          end
+        end
+
+        Google::Protobuf::DescriptorPool.generated_pool.lookup(proto_class_name).msgclass
+      }
+      let(:proto_class_b) {
+        # Use random name to avoid conflict
+        proto_class_name = "proto_class_b_#{Array.new(20) { rand(('a'.ord)..('z'.ord)).chr }.join}"
+
+        Google::Protobuf::DescriptorPool.generated_pool.build do
+          add_message proto_class_name do
+            optional :id, :int64, 1
+          end
+        end
+
+        Google::Protobuf::DescriptorPool.generated_pool.lookup(proto_class_name).msgclass
+      }
+
+      it "returns proto object" do
+        expect(Pb.to_proto(proto_class_a, {})).to eq proto_class_a.new
+
+        expect(Pb.to_proto(proto_class_a, {
+          map_with_primitive_value: {
+            "foo": "bar",
+          },
+          map_with_message_value: {
+            "foo": {
+              "id": 123
+            },
+          },
+          map_with_builtin_value: {
+            "foo": "2019-02-03T00:00:00+09:00",
+          }
+        })).to eq proto_class_a.new({
+          map_with_primitive_value: {
+            "foo": "bar",
+          },
+          map_with_message_value: {
+            "foo": {
+              "id": 123
+            },
+          },
+          map_with_builtin_value: {
+            "foo": Google::Protobuf::Timestamp.new(seconds: Time.new(2019, 2, 3).to_i),
+          }
+        })
+      end
     end
   end
 end

@@ -212,13 +212,34 @@ module Pb
         type_info = field_types[k.to_s]
         next if type_info.nil?  # Ignore unknown field
 
-        if type_info.type == :message
-          params[k] = to_proto(type_info.subtype.msgclass, vv)
-        else
-          params[k] = to_primitive(type_info.type, vv)
-        end
+        params[k] = serialize(type_info, vv)
       end
+
       klass.new(params)
+    end
+
+    # klass is special _MapEntry_ message class
+    def to_proto_map(klass, v)
+      key_descriptor = klass.descriptor.entries.find { |e| e.name == 'key' }
+      value_descriptor = klass.descriptor.entries.find { |e| e.name == 'value' }
+      v.to_h do |k, vv|
+        [
+          serialize(key_descriptor, k),
+          serialize(value_descriptor, vv)
+        ]
+      end
+    end
+
+    def serialize(descriptor, value)
+      if descriptor.type == :message
+        if descriptor.subtype.options.map_entry
+          to_proto_map(descriptor.subtype.msgclass, value)
+        else
+          to_proto(descriptor.subtype.msgclass, value)
+        end
+      else
+        to_primitive(descriptor.type, value)
+      end
     end
 
     # @param [Symbol] type The type of protobuf field. e.g. :enum, :int64,
