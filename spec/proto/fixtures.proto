@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb.fixtures;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
+
+message ProtoA {
+  int64 id = 1;
+  google.protobuf.StringValue name = 2;
+  google.protobuf.Timestamp created_at = 3;
+  ProtoB proto_b = 4;
+}
+
+message ProtoB {
+  int64 id = 1;
+}

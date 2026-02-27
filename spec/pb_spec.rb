@@ -223,35 +223,8 @@ RSpec.describe Pb do
     end
 
     context "when value is not builtin type" do
-      let(:proto_class_a) {
-        klass_b = proto_class_b  # Assign to variable
-
-        # Use random name to avoid conflict
-        proto_class_name = "proto_class_a_#{Array.new(20) { rand(('a'.ord)..('z'.ord)).chr }.join}"
-
-        Google::Protobuf::DescriptorPool.generated_pool.build do
-          add_message proto_class_name do
-            optional :id, :int64, 1
-            optional :name, :message, 2, "google.protobuf.StringValue"
-            optional :created_at, :message, 3, "google.protobuf.Timestamp"
-            optional :proto_b, :message, 4, klass_b.descriptor.name
-          end
-        end
-
-        Google::Protobuf::DescriptorPool.generated_pool.lookup(proto_class_name).msgclass
-      }
-      let(:proto_class_b) {
-        # Use random name to avoid conflict
-        proto_class_name = "proto_class_b_#{Array.new(20) { rand(('a'.ord)..('z'.ord)).chr }.join}"
-
-        Google::Protobuf::DescriptorPool.generated_pool.build do
-          add_message proto_class_name do
-            optional :id, :int64, 1
-          end
-        end
-
-        Google::Protobuf::DescriptorPool.generated_pool.lookup(proto_class_name).msgclass
-      }
+      let(:proto_class_a) { Pb::Fixtures::ProtoA }
+      let(:proto_class_b) { Pb::Fixtures::ProtoB }
 
       it "returns proto object" do
         expect(Pb.to_proto(proto_class_a, {})).to eq proto_class_a.new
