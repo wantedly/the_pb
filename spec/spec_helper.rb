@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "pb"
+require_relative "proto/fixtures_pb"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
