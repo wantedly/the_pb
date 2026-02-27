@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    the_pb (0.0.2)
+    the_pb (0.0.3)
       google-protobuf (>= 3.0, < 5.0)
 
 GEM
